@@ -18,6 +18,27 @@ variable "tags" {
 }
 
 /* -------------------------------------------------------------------------- */
+/*                               Security Group                               */
+/* -------------------------------------------------------------------------- */
+variable "is_create_security_group" {
+  description = "Determines whether to create security group for RDS cluster"
+  type        = bool
+  default     = true
+}
+
+variable "security_group_ingress_rules" {
+  description = "Map of ingress and any specific/overriding attributes to be created"
+  type        = any
+  default     = {}
+}
+
+variable "security_group_egress_rules" {
+  description = "A map of security group egress rule defintions to add to the security group created"
+  type        = any
+  default     = {}
+}
+
+/* -------------------------------------------------------------------------- */
 /*                                     EC2                                    */
 /* -------------------------------------------------------------------------- */
 variable "is_create_instance" {
@@ -51,25 +72,4 @@ variable "subnet_id" {
 variable "user_data" {
   description = "The ID of the subnet relate to VPC"
   type        = string
-}
-
-/* -------------------------------------------------------------------------- */
-/*                               Security Group                               */
-/* -------------------------------------------------------------------------- */
-variable "is_create_security_group" {
-  description = "Determines whether to create security group for RDS cluster"
-  type        = bool
-  default     = true
-}
-
-variable "security_group_ingress_rules" {
-  description = "Map of ingress and any specific/overriding attributes to be created"
-  type        = any
-  default     = {}
-}
-
-variable "security_group_egress_rules" {
-  description = "A map of security group egress rule defintions to add to the security group created"
-  type        = any
-  default     = {}
 }
