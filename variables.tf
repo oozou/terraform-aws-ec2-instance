@@ -41,6 +41,12 @@ variable "security_group_egress_rules" {
 /* -------------------------------------------------------------------------- */
 /*                                     EC2                                    */
 /* -------------------------------------------------------------------------- */
+variable "is_create_eip" {
+  description = "Whether to create EIP or not"
+  type        = bool
+  default     = false
+}
+
 variable "is_batch_run" {
   description = "wherther to create and terminate instance or not"
   type        = bool
@@ -71,4 +77,5 @@ variable "subnet_id" {
 variable "user_data" {
   description = "The ID of the subnet relate to VPC"
   type        = string
+  default     = null
 }

@@ -75,6 +75,7 @@ resource "aws_security_group_rule" "egress" {
 /* -------------------------------------------------------------------------- */
 /*                                     EC2                                    */
 /* -------------------------------------------------------------------------- */
+/* -------------------------------- Instance -------------------------------- */
 resource "aws_instance" "this" {
   ami           = var.ami
   instance_type = var.instance_type
@@ -94,4 +95,14 @@ resource "aws_instance" "this" {
     local.tags,
     { "Name" = format("%s-ec2", local.name) },
   )
+}
+
+/* ----------------------------------- EIP ---------------------------------- */
+resource "aws_eip" "this" {
+  count = var.is_create_eip ? 1 : 0
+
+  vpc      = true
+  instance = aws_instance.this.id
+
+  tags = local.tags
 }
