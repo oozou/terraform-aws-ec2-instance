@@ -79,3 +79,9 @@ variable "user_data" {
   type        = string
   default     = null
 }
+
+variable "key_name" {
+  description = "(Optional) Key name of the Key Pair to use for the instance; which can be managed using"
+  type        = string
+  default     = null
+}
