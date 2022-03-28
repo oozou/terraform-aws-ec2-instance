@@ -41,16 +41,15 @@ variable "security_group_egress_rules" {
 /* -------------------------------------------------------------------------- */
 /*                                     EC2                                    */
 /* -------------------------------------------------------------------------- */
-variable "is_create_instance" {
-  description = "Whether to create ec2 instance or not"
+variable "is_batch_run" {
+  description = "wherther to create and terminate instance or not"
   type        = bool
   default     = true
 }
 
-variable "is_bootstrap_instance" {
-  description = "wherther to create and terminate instance or not"
-  type        = bool
-  default     = true
+variable "ami" {
+  type        = string
+  description = "(Optional) AMI to use for the instance. Required unless launch_template is specified and the Launch Template specifes an AMI. If an AMI is specified in the Launch Template, setting ami will override the AMI specified in the Launch Template"
 }
 
 variable "instance_type" {

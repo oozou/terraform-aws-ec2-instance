@@ -4,7 +4,8 @@
 locals {
   name = format("%s-%s", var.prefix, var.environment)
 
-  instance_initiated_shutdown_behavior = var.is_bootstrap_instance ? "terminate" : "stop"
+  # No change -> no run
+  machine_type = var.is_batch_run ? "terminate" : "stop"
 
   tags = merge(
     {
@@ -16,30 +17,10 @@ locals {
 }
 
 /* -------------------------------------------------------------------------- */
-/*                                    Data                                    */
-/* -------------------------------------------------------------------------- */
-/* ------------------------------- ubuntu ami ------------------------------- */
-data "aws_ami" "ubuntu" {
-  most_recent = true
-
-  filter {
-    name   = "name"
-    values = ["ubuntu/images/hvm-ssd/ubuntu-focal-20.04-amd64-server-*"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
-
-  owners = ["099720109477"] # Canonical
-}
-
-/* -------------------------------------------------------------------------- */
 /*                               Security Group                               */
 /* -------------------------------------------------------------------------- */
 resource "aws_security_group" "this" {
-  count = var.is_create_instance && var.is_create_security_group ? 1 : 0
+  count = var.is_create_security_group ? 1 : 0
 
   name        = format("%s-ec2-bootstrap-sg", local.name)
   vpc_id      = var.vpc_id
@@ -60,7 +41,7 @@ resource "aws_security_group" "this" {
 }
 
 resource "aws_security_group_rule" "ingress" {
-  for_each = var.is_create_instance && var.is_create_security_group ? var.security_group_ingress_rules : null
+  for_each = var.is_create_security_group ? var.security_group_ingress_rules : null
 
   type              = "ingress"
   from_port         = lookup(each.value, "from_port", lookup(each.value, "port", null))
@@ -76,7 +57,7 @@ resource "aws_security_group_rule" "ingress" {
 }
 
 resource "aws_security_group_rule" "egress" {
-  for_each = var.is_create_instance && var.is_create_security_group ? var.security_group_egress_rules : null
+  for_each = var.is_create_security_group ? var.security_group_egress_rules : null
 
   type              = "egress"
   from_port         = lookup(each.value, "from_port", lookup(each.value, "port", null))
@@ -95,15 +76,13 @@ resource "aws_security_group_rule" "egress" {
 /*                                     EC2                                    */
 /* -------------------------------------------------------------------------- */
 resource "aws_instance" "this" {
-  count = var.is_create_instance ? 1 : 0
-
-  ami           = data.aws_ami.ubuntu.id
+  ami           = var.ami
   instance_type = var.instance_type
   subnet_id     = var.subnet_id
   user_data     = var.user_data
 
   vpc_security_group_ids               = [aws_security_group.this[0].id]
-  instance_initiated_shutdown_behavior = local.instance_initiated_shutdown_behavior
+  instance_initiated_shutdown_behavior = local.machine_type
 
   lifecycle {
     ignore_changes = [
