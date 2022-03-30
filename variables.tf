@@ -48,9 +48,9 @@ variable "is_create_eip" {
 }
 
 variable "is_batch_run" {
-  description = "wherther to create and terminate instance or not"
+  description = "wherther to create and terminate instance when script change or not"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "ami" {
