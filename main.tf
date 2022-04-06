@@ -98,6 +98,13 @@ resource "aws_instance" "this" {
   )
 }
 
+resource "aws_network_interface_sg_attachment" "sg_attachment" {
+  for_each = var.additional_sg_attacment_ids
+
+  security_group_id    = each.value
+  network_interface_id = aws_instance.this.primary_network_interface_id
+}
+
 /* ----------------------------------- EIP ---------------------------------- */
 resource "aws_eip" "this" {
   count = var.is_create_eip ? 1 : 0
