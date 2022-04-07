@@ -10,7 +10,7 @@ module "ecc" {
   prefix      = "sbth"
   environment = "dev"
 
-  is_create_eip = var.is_create_eip # Deafult is `false`
+  is_create_eip = true # Deafult is `false`
 
   ami                         = "ami-055d15d9cfddf7bd3" # This value is ubuntu20.04
   vpc_id                      = module.vpc.vpc_id
