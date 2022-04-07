@@ -3,7 +3,40 @@ Generic Bootstrap Instance on AWS EC2
 
 ## Usage
 
-```
+```terraform
+module "ecc" {
+  source = "git::ssh://git@github.com/oozou/terraform-aws-ec2-instance.git?ref=<branch_or_version>"
+
+  prefix      = "sbth"
+  environment = "dev"
+
+  is_create_eip = var.is_create_eip # Deafult is `false`
+
+  ami                         = "ami-055d15d9cfddf7bd3" # This value is ubuntu20.04
+  vpc_id                      = module.vpc.vpc_id
+  subnet_id                   = element(module.vpc.public_subnet_ids, 0)
+  is_batch_run                = false # Default is `false`, If machine is need to be `terminated` with instance_initiated_shutdown_behavior
+  key_name                    = "big-ssh-key"
+  additional_sg_attacment_ids = ["sg-000da3cbe7e0d8713"] # The sg to associate with this instance
+
+  user_data = file("./script/install-pritunlvpn.sh")
+
+  security_group_ingress_rules = {
+    allow_to_db = {
+      port        = "443"
+      cidr_blocks = ["1.1.1.1/32"]
+    }
+    allow_to_you = {
+      port        = "22"
+      cidr_blocks = ["0.0.0.0/0"]
+    }
+    allow_with_sg = {
+      source_security_group_id = "sg-000daabcd7e0d2475"
+    }
+  }
+
+  tags = { "Workspace" = "O-labtop" }
+}
 
 ```
 

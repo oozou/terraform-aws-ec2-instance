@@ -4,8 +4,7 @@
 locals {
   name = format("%s-%s", var.prefix, var.environment)
 
-  # No change -> no run
-  machine_type = var.is_batch_run ? "terminate" : "stop"
+  machine_type = var.is_batch_run ? "stop" : "terminate"
 
   tags = merge(
     {
