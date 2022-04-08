@@ -86,6 +86,12 @@ variable "key_name" {
   default     = null
 }
 
+variable "iam_instance_profile" {
+  description = "(Optional) IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile. Ensure your credentials have the correct permission to assign the instance profile"
+  type        = string
+  default     = null
+}
+
 variable "additional_sg_attacment_ids" {
   description = "(Optional) The ID of the security group."
   type        = list(string)

@@ -84,6 +84,7 @@ resource "aws_instance" "this" {
 
   vpc_security_group_ids               = [aws_security_group.this[0].id]
   instance_initiated_shutdown_behavior = local.machine_type
+  iam_instance_profile                 = var.iam_instance_profile
 
   lifecycle {
     ignore_changes = [
