@@ -21,7 +21,7 @@ locals {
 resource "aws_security_group" "this" {
   count = var.is_create_security_group ? 1 : 0
 
-  name        = format("%s-ec2-bootstrap-sg", local.name)
+  name        = format("%s-ec2-sg", local.name)
   vpc_id      = var.vpc_id
   description = "ec2 bootstrap security group for allow egress"
 
