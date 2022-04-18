@@ -82,7 +82,7 @@ resource "aws_instance" "this" {
   user_data     = var.user_data
   key_name      = var.key_name
 
-  vpc_security_group_ids               = [aws_security_group.this[0].id]
+  vpc_security_group_ids               = concat([aws_security_group.this[0].id], var.additional_sg_attacment_ids)
   instance_initiated_shutdown_behavior = local.machine_type
   iam_instance_profile                 = var.iam_instance_profile
 
@@ -96,13 +96,6 @@ resource "aws_instance" "this" {
     local.tags,
     { "Name" = format("%s-ec2", local.name) },
   )
-}
-
-resource "aws_network_interface_sg_attachment" "sg_attachment" {
-  for_each = toset(var.additional_sg_attacment_ids)
-
-  security_group_id    = each.value
-  network_interface_id = aws_instance.this.primary_network_interface_id
 }
 
 /* ----------------------------------- EIP ---------------------------------- */
