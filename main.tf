@@ -2,7 +2,7 @@
 /*                                  Generics                                  */
 /* -------------------------------------------------------------------------- */
 locals {
-  name = format("%s-%s", var.prefix, var.environment)
+  name = format("%s-%s-%s", var.prefix, var.environment, var.name)
 
   machine_type = var.is_batch_run ? "stop" : "terminate"
 
