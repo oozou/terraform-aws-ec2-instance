@@ -11,6 +11,11 @@ variable "environment" {
   type        = string
 }
 
+variable "name" {
+  description = "name the purpose for the ec2 instance"
+  type        = string
+}
+
 variable "tags" {
   description = "Tags to add more; default tags contian {terraform=true, environment=var.environment}"
   type        = map(string)
