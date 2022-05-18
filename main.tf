@@ -35,7 +35,7 @@ resource "aws_security_group" "this" {
 
   tags = merge(
     local.tags,
-    { "Name" = format("%s-ec2-bootstrap-sg", local.name) },
+    { "Name" = format("%s-ec2-sg", local.name) },
   )
 }
 
