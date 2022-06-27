@@ -91,16 +91,16 @@ variable "key_name" {
   default     = null
 }
 
-variable "iam_instance_profile" {
-  description = "(Optional) IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile. Ensure your credentials have the correct permission to assign the instance profile"
-  type        = string
-  default     = null
-}
-
 variable "is_create_default_profile" {
   description = "(Optional) boolean flag for create instance profile and iam role to ec2 module"
   type        = bool
-  default     = false
+  default     = true
+}
+
+variable "iam_instance_profile" {
+  description = "(Optional) IAM Instance Profile to launch the instance with. Specified as the name of the Instance Profile. It only affects when is_create_default_profile is false"
+  type        = string
+  default     = null
 }
 
 variable "override_profile_policy" {
