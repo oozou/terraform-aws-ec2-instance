@@ -97,6 +97,18 @@ variable "iam_instance_profile" {
   default     = null
 }
 
+variable "is_create_default_profile" {
+  description = "(Optional) boolean flag for create instance profile and iam role to ec2 module"
+  type        = bool
+  default     = false
+}
+
+variable "override_profile_policy" {
+  description = "List of IAM policy documents that are merged together into the exported document"
+  type        = list(string)
+  default     = []
+}
+
 variable "additional_sg_attacment_ids" {
   description = "(Optional) The ID of the security group."
   type        = list(string)
