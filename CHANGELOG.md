@@ -12,8 +12,7 @@ All notable changes to this module will be documented in this file.
 - variables
   - `is_create_default_profile`
   - `override_profile_policy`
-
-
+  - `additional_profile_policy_arns`
 
 ## [1.0.3] - 2022-06-18
 

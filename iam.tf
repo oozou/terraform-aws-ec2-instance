@@ -53,6 +53,12 @@ resource "aws_iam_role_policy" "this" {
   policy = data.aws_iam_policy_document.this.json
 }
 
+resource "aws_iam_role_policy_attachment" "this" {
+  count      = length(var.additional_profile_policy_arns)
+  role       = aws_iam_role.this[0].name
+  policy_arn = var.additional_profile_policy_arns[count.index]
+}
+
 resource "aws_iam_instance_profile" "this" {
   count = var.is_create_default_profile ? 1 : 0
   name  = format("%s-profile", local.name)
