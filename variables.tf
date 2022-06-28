@@ -109,6 +109,12 @@ variable "override_profile_policy" {
   default     = []
 }
 
+variable "override_profile_assume_role_policy" {
+  description = "List of IAM policy documents that are merged together into the assume role policy"
+  type        = list(string)
+  default     = []
+}
+
 variable "additional_profile_policy_arns" {
   description = "List of IAM policy arns that are attach to iam profile role"
   type        = list(string)

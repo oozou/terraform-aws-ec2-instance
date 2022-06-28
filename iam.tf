@@ -28,6 +28,7 @@ data "aws_iam_policy_document" "this" {
 }
 
 data "aws_iam_policy_document" "this_assume_role" {
+  override_policy_documents = var.override_profile_assume_role_policy
   statement {
     actions = ["sts:AssumeRole"]
 
