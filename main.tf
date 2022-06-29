@@ -1,21 +1,4 @@
 /* -------------------------------------------------------------------------- */
-/*                                  Generics                                  */
-/* -------------------------------------------------------------------------- */
-locals {
-  name = format("%s-%s-%s", var.prefix, var.environment, var.name)
-
-  machine_type = var.is_batch_run ? "stop" : "terminate"
-
-  tags = merge(
-    {
-      "Environment" = var.environment,
-      "Terraform"   = true
-    },
-    var.tags
-  )
-}
-
-/* -------------------------------------------------------------------------- */
 /*                               Security Group                               */
 /* -------------------------------------------------------------------------- */
 resource "aws_security_group" "this" {
@@ -84,7 +67,7 @@ resource "aws_instance" "this" {
 
   vpc_security_group_ids               = concat([aws_security_group.this[0].id], var.additional_sg_attacment_ids)
   instance_initiated_shutdown_behavior = local.machine_type
-  iam_instance_profile                 = var.iam_instance_profile
+  iam_instance_profile                 = var.is_create_default_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
 
   lifecycle {
     ignore_changes = [
