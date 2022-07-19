@@ -80,7 +80,7 @@ variable "subnet_id" {
 }
 
 variable "user_data" {
-  description = "The ID of the subnet relate to VPC"
+  description = "The user data to provide when launching the instance"
   type        = string
   default     = null
 }
