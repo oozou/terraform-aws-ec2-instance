@@ -126,3 +126,34 @@ variable "additional_sg_attacment_ids" {
   type        = list(string)
   default     = []
 }
+
+variable "additional_disks" {
+  description = "(Optional) additional ebs disks."
+  type = list(object({
+    device_name           = string
+    volume_size           = number
+    volume_type           = string
+    delete_on_termination = bool
+  }))
+  # default = [
+  #   {
+  #     device_name = "/dev/sdb"
+  #     volume_size = 50
+  #     volume_type = "gp3"
+  #     delete_on_termination = false
+  #   },
+  #   {
+  #     device_name = "/dev/sdc"
+  #     volume_size = 100
+  #     volume_type = "gp3"
+  #     delete_on_termination = false
+  #   }
+  # ]
+  default = []
+}
+
+variable "kms_key_id" {
+  description = "(Optional) Amazon Resource Name (ARN) of the KMS Key to use when encrypting the volume"
+  type        = string
+  default     = null
+}

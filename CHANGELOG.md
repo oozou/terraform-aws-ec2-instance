@@ -2,6 +2,12 @@
 
 All notable changes to this module will be documented in this file.
 
+## [1.0.6] - 2023-06-30
+
+### Added
+
+- additional ecs disks
+
 ## [1.0.5] - 2022-07-01
 
 ### Added

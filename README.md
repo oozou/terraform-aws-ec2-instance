@@ -55,7 +55,7 @@ module "ecc" {
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | 4.10.0 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 4.00 |
 
 ## Modules
 
@@ -81,6 +81,7 @@ No modules.
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_additional_disks"></a> [additional\_disks](#input\_additional\_disks) | (Optional) additional ebs disks. | <pre>list(object({<br>    device_name           = string<br>    volume_size           = number<br>    volume_type           = string<br>    delete_on_termination = bool<br>  }))</pre> | `[]` | no |
 | <a name="input_additional_profile_policy_arns"></a> [additional\_profile\_policy\_arns](#input\_additional\_profile\_policy\_arns) | List of IAM policy arns that are attach to iam profile role | `list(string)` | `[]` | no |
 | <a name="input_additional_sg_attacment_ids"></a> [additional\_sg\_attacment\_ids](#input\_additional\_sg\_attacment\_ids) | (Optional) The ID of the security group. | `list(string)` | `[]` | no |
 | <a name="input_ami"></a> [ami](#input\_ami) | (Optional) AMI to use for the instance. Required unless launch\_template is specified and the Launch Template specifes an AMI. If an AMI is specified in the Launch Template, setting ami will override the AMI specified in the Launch Template | `string` | n/a | yes |
@@ -92,6 +93,7 @@ No modules.
 | <a name="input_is_create_eip"></a> [is\_create\_eip](#input\_is\_create\_eip) | Whether to create EIP or not | `bool` | `false` | no |
 | <a name="input_is_create_security_group"></a> [is\_create\_security\_group](#input\_is\_create\_security\_group) | Determines whether to create security group for RDS cluster | `bool` | `true` | no |
 | <a name="input_key_name"></a> [key\_name](#input\_key\_name) | (Optional) Key name of the Key Pair to use for the instance; which can be managed using | `string` | `null` | no |
+| <a name="input_kms_key_id"></a> [kms\_key\_id](#input\_kms\_key\_id) | (Optional) Amazon Resource Name (ARN) of the KMS Key to use when encrypting the volume | `string` | `null` | no |
 | <a name="input_name"></a> [name](#input\_name) | name the purpose for the ec2 instance | `string` | n/a | yes |
 | <a name="input_override_profile_assume_role_policy"></a> [override\_profile\_assume\_role\_policy](#input\_override\_profile\_assume\_role\_policy) | List of IAM policy documents that are merged together into the assume role policy | `list(string)` | `[]` | no |
 | <a name="input_override_profile_policy"></a> [override\_profile\_policy](#input\_override\_profile\_policy) | List of IAM policy documents that are merged together into the exported document | `list(string)` | `[]` | no |
@@ -100,7 +102,7 @@ No modules.
 | <a name="input_security_group_ingress_rules"></a> [security\_group\_ingress\_rules](#input\_security\_group\_ingress\_rules) | Map of ingress and any specific/overriding attributes to be created | `any` | `{}` | no |
 | <a name="input_subnet_id"></a> [subnet\_id](#input\_subnet\_id) | The ID of the subnet relate to VPC | `string` | n/a | yes |
 | <a name="input_tags"></a> [tags](#input\_tags) | Tags to add more; default tags contian {terraform=true, environment=var.environment} | `map(string)` | `{}` | no |
-| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | The ID of the subnet relate to VPC | `string` | `null` | no |
+| <a name="input_user_data"></a> [user\_data](#input\_user\_data) | The user data to provide when launching the instance | `string` | `null` | no |
 | <a name="input_vpc_id"></a> [vpc\_id](#input\_vpc\_id) | The ID of the VPC | `string` | n/a | yes |
 
 ## Outputs

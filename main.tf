@@ -69,6 +69,17 @@ resource "aws_instance" "this" {
   instance_initiated_shutdown_behavior = local.machine_type
   iam_instance_profile                 = var.is_create_default_profile ? aws_iam_instance_profile.this[0].name : var.iam_instance_profile
 
+  # Attach the additional disks dynamically
+  dynamic "ebs_block_device" {
+    for_each = var.additional_disks
+    content {
+      device_name           = ebs_block_device.value.device_name
+      volume_size           = ebs_block_device.value.volume_size
+      volume_type           = ebs_block_device.value.volume_type
+      delete_on_termination = true
+    }
+  }
+
   lifecycle {
     ignore_changes = [
       instance_state
