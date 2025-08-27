@@ -85,7 +85,7 @@ resource "aws_instance" "this" {
 resource "aws_eip" "this" {
   count = var.is_create_eip ? 1 : 0
 
-  vpc      = true
+  domain   = "vpc"
   instance = aws_instance.this.id
 
   tags = local.tags
